@@ -1,7 +1,8 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import IconHoverEffect from "./IconHoverEffect";
-import { VscAccount, VscHome, VscSignIn, VscSignOut } from "react-icons/vsc";
+import { VscHome, VscSignIn, VscSignOut } from "react-icons/vsc";
+import ProfileImage from "./ProfileImage";
 
 export function SideNav() {
   const session = useSession();
@@ -9,7 +10,7 @@ export function SideNav() {
   return (
     <nav className="sticky top-0 self-start px-2 py-4">
       <ul className="flex flex-col items-center gap-2 whitespace-nowrap">
-        <li>
+        <li className="w-full">
           <Link href={"/"}>
             <IconHoverEffect>
               <span className="flex items-center gap-4">
@@ -20,11 +21,14 @@ export function SideNav() {
           </Link>
         </li>
         {user != null && (
-          <li>
+          <li className="w-full">
             <Link href={`/profiles/${user.id}`}>
               <IconHoverEffect>
                 <span className="flex items-center gap-4">
-                  <VscAccount className="h-8 w-8" />
+                  <ProfileImage
+                    src={user.image}
+                    className="h-8 w-8 flex-shrink-0"
+                  />
                   <span className="hidden text-lg md:inline">Profile</span>
                 </span>
               </IconHoverEffect>
@@ -32,7 +36,7 @@ export function SideNav() {
           </li>
         )}
         {user == null ? (
-          <li>
+          <li className="w-full">
             <button onClick={() => void signIn()}>
               {" "}
               <IconHoverEffect>
@@ -46,7 +50,7 @@ export function SideNav() {
             </button>
           </li>
         ) : (
-          <li>
+          <li className="w-full">
             <button onClick={() => void signOut()}>
               {" "}
               <IconHoverEffect>
