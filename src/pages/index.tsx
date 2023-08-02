@@ -50,7 +50,7 @@ function RecentTweets() {
   return (
     <InfiniteTweetList
       tweets={tweets.data?.pages.flatMap((page) => page.tweets)}
-      isError={tweets.error}
+      isError={tweets.isError}
       isLoading={tweets.isLoading}
       hasMore={tweets.hasNextPage}
       fetchNewTweets={tweets.fetchNextPage}
@@ -67,7 +67,7 @@ function FollowingTweets() {
   return (
     <InfiniteTweetList
       tweets={tweets.data?.pages.flatMap((page) => page.tweets)}
-      isError={tweets.error}
+      isError={tweets.isError}
       isLoading={tweets.isLoading}
       hasMore={tweets.hasNextPage}
       fetchNewTweets={tweets.fetchNextPage}

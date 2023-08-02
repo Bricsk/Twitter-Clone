@@ -72,11 +72,14 @@ export const tweetRouter = createTRPCRouter({
   // Define a procedure called "create" for protected access (requires authentication)
   create: protectedProcedure
     .input(z.object({ content: z.string() })) // Define the input shape for creating a tweet
-    .mutation(async ({ input: { content }, ctx }) => {
+    .mutation(async function ({ input: { content }, ctx }) {
       // Create a new tweet using the Prisma ORM and the authenticated user's ID
       const tweet = await ctx.prisma.tweet.create({
         data: { content, userId: ctx.session.user.id },
       });
+
+      void ctx.revalidateSSG?.(`/profiles/${ctx.session.user.id}`);
+
       return tweet; // Return the created tweet
     }),
 
